@@ -11,7 +11,6 @@ import com.discordessentials.bot.command.CommandManager;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.exceptions.RateLimitedException;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 
@@ -74,6 +73,7 @@ public class Bot extends Thread {
 		this.commandManager.registerCommand(new CommandInfo(this.api));
 		this.commandManager.registerCommand(new CommandHelp(this.commandManager));
 		this.commandManager.registerCommand(new CommandData());
+		this.commandManager.registerCommand(new CommandEcho(this.commandManager.getAccountManager()));
 
 	}
 	

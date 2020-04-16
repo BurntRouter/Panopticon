@@ -1,19 +1,30 @@
 package com.discordessentials.bot.database;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class AccountManager {
 
 	private MySQL mysql;
 
 	public AccountManager(MySQL mysql) {
 		this.setMysql(mysql);
-		/**
-		 * try { if (!this.todayRegisteredInRecord()) { DateFormat dateFormat = new
-		 * SimpleDateFormat("yy/MM/dd"); Date date = new Date();
-		 *
-		 * this.mysql.getStatement("INSERT INTO DailyReports (commands, date) VALUES (0,
-		 * '" + dateFormat.format(date) + "')").execute(); } }catch(SQLException e){
-		 * e.printStackTrace(); }
-		 **/
+		
+	}
+	
+	public String getPrefix(String guildid) throws SQLException {
+		PreparedStatement getPrefixStatement = this.mysql
+				.getStatement("SELECT prefix from Guilds where guildid = ?");
+		getPrefixStatement.setString(1, guildid);
+		
+		ResultSet prefix = getPrefixStatement.executeQuery();
+		
+		while (prefix.next()) {
+			return prefix.getString("prefix");
+		}
+		
+		return guildid;
 	}
 
 
