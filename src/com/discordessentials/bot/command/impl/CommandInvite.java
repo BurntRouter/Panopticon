@@ -16,7 +16,7 @@ public class CommandInvite extends Command {
 
 	@Override
 	public void onUse(Message query, List<String> arguments, CommandManager commandManager) throws Exception {
-		commandManager.sendBatchedResponse(query.getGuild().getId(), query.getTextChannel().getId(),"You can invite me to my own server by using this link. If you'd like an admin to add it to their server, send them this link too!\nhttps://discordapp.com/oauth2/authorize?client_id=256556410031046657&scope=bot&permissions=281600");
+		commandManager.sendBatchedResponse(query.getGuild().getId(), query.getTextChannel().getId(),"To add me to your server just click this link!\nhttps://discordapp.com/oauth2/authorize?client_id=700187991460806696&scope=bot&permissions=1610608119");
 	}
 
 }

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.discordessentials.bot.database.AccountManager;
 import com.discordessentials.bot.database.MySQL;
@@ -12,6 +13,7 @@ import com.discordessentials.bot.database.prefix.PrefixRegistry;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.RateLimitedException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class CommandManager extends ListenerAdapter {
@@ -23,6 +25,8 @@ public class CommandManager extends ListenerAdapter {
 	private JDA api;
 
 	private PrefixRegistry prefixRegistry;
+	
+	private final String LEGACY_PREFIX = (".de ");
 
 	public CommandManager(JDA api) throws ClassNotFoundException, SQLException {
 		this.commands = new ArrayList<>();
@@ -86,6 +90,39 @@ public class CommandManager extends ListenerAdapter {
 		if(query.getContentRaw().startsWith(selfMention)) {
 			prefix = (selfMention) + " ";
 		}
+	
+	if(content.startsWith(prefix) || content.startsWith(this.LEGACY_PREFIX)){
+		content = content.replaceAll(Pattern.quote(prefix), "");
+
+		content = content.replaceFirst(this.LEGACY_PREFIX, "");
+
+		List<String> fullQuery = (Arrays.asList(content.split(" ")));
+		
+		for(Command command : this.getCommands()){
+			if(command.canExecuteForChannel(query.getTextChannel(), this.api.getSelfUser())) {
+				String queryIdentifier = (fullQuery.get(0));
+				if (command.identifierMatches(queryIdentifier)) {
+					try {
+						command.onUse(query, fullQuery, this);
+					} catch (Exception e) {
+						try {
+							if (!(e instanceof RateLimitedException)) {
+								String args = Arrays.toString(command.getArguments());
+
+								query.getTextChannel().sendMessage("Oops! That command was used incorrectly. Command arguments: `" + args + "`\nUsage: `" + prefix + command.getIdentifiers()[0] + " " + args.replace("[", "").replace("]", "").replace(",", "") + "`\n\nIf you are still experiencing issues, DM Router#1384 for help!").queue();
+							}
+						} catch (Exception e2) {
+							System.out.println("Error A (error in reporting error):");
+							e2.printStackTrace();
+						}
+
+						System.out.println("Error B:");
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
 	}
 	
 	public void registerCommand(Command command){

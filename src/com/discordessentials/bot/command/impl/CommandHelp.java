@@ -61,7 +61,8 @@ public class CommandHelp extends Command {
 		PrivateChannel channel = query.getAuthor().openPrivateChannel().complete();
 		
 		channel.sendMessage(embed.build()).queue();
-		channel.sendMessage("**-**\n\nCome race snails and hang out or get help: https://discord.gg/J2qNRyd\n\nInvite me to your server, or ask a server you like to add the bot (show them this link):\n<https://discordapp.com/oauth2/authorize?client_id=256556410031046657&scope=bot&permissions=281600>").queue();
+		channel.sendMessage("Bug or suggestion? Let us know on our Github! https://github.com/BurntRouter/DiscordEssentials").queue();
+		channel.sendMessage("Questions or Comments? DM Router#1384 for help!").queue();
 		commandManager.sendBatchedResponse(query.getGuild().getId(), query.getTextChannel().getId(),"DMed :thumbsup: :sparkles:");
 	}
 
