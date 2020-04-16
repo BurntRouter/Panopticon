@@ -30,7 +30,6 @@ hs_err_pid*
 build/
 
 ## Project Specific
-guilds.txt
 volume.txt
 
 ## IDEA
@@ -39,3 +38,6 @@ volume.txt
 Bot.iml
 /.idea
 /.settings
+
+.DS_Store
+

@@ -23,7 +23,7 @@ public class PrefixRegistry {
         ResultSet customPrefixesQuery = readCustomPrefixes.executeQuery();
 
         while(customPrefixesQuery.next()) {
-            String customPrefixGuildId = customPrefixesQuery.getString("guildId");
+            String customPrefixGuildId = customPrefixesQuery.getString("guildid");
             String customPrefix = customPrefixesQuery.getString("prefix");
 
             this.registeredPrefixes.put(customPrefixGuildId, customPrefix);
@@ -31,12 +31,12 @@ public class PrefixRegistry {
     }
 
     public void registerCustomPrefix(MySQL database, String guildId, String prefix) throws SQLException {
-        PreparedStatement deletePreviousPrefixForGuild = database.getStatement("DELETE FROM Guilds WHERE guildId = ?");
+        PreparedStatement deletePreviousPrefixForGuild = database.getStatement("DELETE FROM Guilds WHERE guildid = ?");
         deletePreviousPrefixForGuild.setString(1, guildId);
 
         deletePreviousPrefixForGuild.execute();
 
-        PreparedStatement insertPrefixForGuild = database.getStatement("INSERT INTO Guilds (guildId, prefix) VALUES (?, ?)");
+        PreparedStatement insertPrefixForGuild = database.getStatement("INSERT INTO Guilds (guildid, prefix) VALUES (?, ?)");
         insertPrefixForGuild.setString(1, guildId);
         insertPrefixForGuild.setString(2, prefix);
 

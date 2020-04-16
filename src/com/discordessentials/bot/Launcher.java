@@ -9,7 +9,7 @@ public class Launcher {
 	
 	private static final boolean DEBUG = true;
 
-	private static final int TOTAL_SHARDS = 4;
+	private static final int TOTAL_SHARDS = 1;
 
 	private static final int CURRENT_SHARD = 0;
 

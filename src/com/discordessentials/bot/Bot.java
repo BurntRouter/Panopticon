@@ -43,7 +43,7 @@ public class Bot extends Thread {
 	
 	public void setup() throws LoginException, IllegalArgumentException, InterruptedException, RateLimitedException {
 		System.out.println("Starting building");
-;		this.api = JDABuilder.createDefault(token).setStatus(OnlineStatus.ONLINE).setChunkingFilter(ChunkingFilter.NONE).setActivity(Activity.of(Activity.ActivityType.DEFAULT, ".de help | By Router#1384")).useSharding(this.shard, this.shardTotal).build().awaitReady();
+		this.api = new JDABuilder(AccountType.BOT).setToken(token).setChunkingFilter(ChunkingFilter.NONE).setActivity(Activity.of(Activity.ActivityType.DEFAULT, ".de help | By Router#1384")).useSharding(this.shard, this.shardTotal).build().awaitReady();		
 		System.out.println("Finished " + this.api.getShardInfo().getShardId() + " with " + this.api.getGuilds().size() + " guilds. " + api.getSelfUser().getName());
 	}
 
@@ -73,7 +73,6 @@ public class Bot extends Thread {
 		this.commandManager.registerCommand(new CommandInvite());
 		this.commandManager.registerCommand(new CommandInfo(this.api));
 		this.commandManager.registerCommand(new CommandHelp(this.commandManager));
-		this.commandManager.registerCommand(new CommandCheckGuild(this.api));
 		this.commandManager.registerCommand(new CommandData());
 
 	}

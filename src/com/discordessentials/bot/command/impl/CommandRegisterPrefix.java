@@ -33,14 +33,14 @@ public class CommandRegisterPrefix extends Command {
 			String prefix = StringUtils.substringBetween(query.getContentRaw(), "\"");
 
 			if(this.validPrefix(prefix)) {
-				PrefixRegistry.getInstance().registerCustomPrefix(commandManager.getAccountManager().getMysql(), guildId, prefix);
+				PrefixRegistry.getInstance().registerCustomPrefix(commandManager.getAccountManager().getMysql(), guildId, prefix + " ");
 
 				String prefixedStart = PrefixRegistry.getInstance().getPrefixedCommand(guildId, "help");
 
 				query.getTextChannel().sendMessage(":white_check_mark: Prefix has been set successfully! \n\nExample usage: " + prefixedStart).queue();
 			} else {
 				String usage = (oldPrefix + this.getIdentifiers()[0] + " \"yourprefix\"");
-				String example = (oldPrefix + this.getIdentifiers()[0] + " \"!s \"");
+				String example = (oldPrefix + this.getIdentifiers()[0] + " \".de \"");
 				query.getTextChannel().sendMessage("Either the command was used incorrectly, or the requested prefix exceeds **" + this.CHARACTER_MAX + "** characters (excluding spaces).\n-\n\n**Correct usage:**\n" + usage + "\n\n**Example:**\n" + example).queue();
 			}
 

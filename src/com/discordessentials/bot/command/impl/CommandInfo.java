@@ -37,23 +37,18 @@ public class CommandInfo extends Command {
 		int shards = (api.getShardInfo().getShardTotal());
 		
 		EmbedBuilder embed = new EmbedBuilder();
-		embed.setColor(Color.GREEN);
+		embed.setColor(Color.BLUE);
+				
+		embed.setTitle("Discord Essentials #" + shard + "/" + shards + " Information", "https://github.com/BurntRouter/DiscordEssentials");
 		
-		embed.setThumbnail("https://i.imgur.com/CLUK1rd.png");
-		
-		embed.setTitle("Snail Racing Shard #" + shard + "/" + shards + " Information", "https://discord.io/snail");
-		
-		embed.setFooter("Enjoy your racing! - Zach, Router, & Ieyfo", "https://i.imgur.com/CLUK1rd.png");
+		embed.setFooter("Designed and ran by Router#1384");
 		
 		embed.addField("\nShard Guilds", "" + servers, false);
 		embed.addField("Shard Users", "" + users, false);
 		embed.addField("Version Number", "" + Version.VERSION, true);
-		embed.addField("Bot Author", "Dr Zachary Smith#9260 & Router#1384", true);
+		embed.addField("Bot Author", "Router#1384", true);
 
 		query.getChannel().sendMessage(embed.build()).queue();
-		
-		//commandManager.sendBatchedResponse(query.getGuild().getId(), query.getTextChannel().getId(), "I was created by Dr Zachary Smith#9260. This is shard " + shard + "/" + api.getShardInfo().getShardTotal() + ", which is supplying **" + api.getGuilds().size() + "** of the bot's guilds. The servers on this shard have a total of **" + users + "** users." + "\nThis is Snail Racing version " + Version.VERSION + ".");
-		//commandManager.sendBatchedResponse(query.getGuild().getId(), query.getTextChannel().getId(),"I was created by Dr Zachary Smith#9260. I am currently entertaining **" + users + "** people in **" + servers + "** servers. :smile:\n_I was created on December 8, 2016, and this is version " + Version.VERSION + "_");
 	}
 	
 }
